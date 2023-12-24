@@ -1,0 +1,58 @@
+# 单机配置
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-server #应用名称 不用使用特殊字符
+eureka:
+  server:
+    eviction-interval-timer-in-ms: 10000 # 如服务器间隔多少毫秒做定时删除的操作
+    renewal-percent-threshold: 0.85 # 续约百分比 超过80%的应用没有和你续约，那么eureka会保护服务 不会剔除任何一个服务
+  client:
+    register-with-eureka: ${REGISTER_WITH_EUREKA:true} #是否可以不往eureka-server注册
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+  instance:
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port} #主机名称 : 应用名称 : 服务端口
+    hostname: localhost #主机名称
+    prefer-ip-address: true   #以IP的形式显示具体的服务信息
+    lease-renewal-interval-in-seconds: ${LEASE_RENEWAL_INTERVAL_IN_SECONDS:5}  # 服务实例的续约的时间间隔
+
+
+# 集群配置
+#server:
+#  port: 8761
+#spring:
+#  application:
+#    name: eureka-server #应用名称 不用使用特殊字符
+#eureka:
+#  server:
+#    eviction-interval-timer-in-ms: 10000 # 如服务器间隔多少毫秒做定时删除的操作
+#    renewal-percent-threshold: 0.85 # 续约百分比 超过80%的应用没有和你续约，那么eureka会保护服务 不会剔除任何一个服务
+#  client:
+#    service-url:
+#      defaultZone:  http://localhost:8762/eureka,http://localhost:8763/eureka
+#  instance:
+#    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port} #主机名称 : 应用名称 : 服务端口
+#    hostname: localhost #主机名称
+#    prefer-ip-address: true   #以IP的形式显示具体的服务信息
+#    lease-renewal-interval-in-seconds: 5  # 服务实例的续约的时间间隔
+
+# 集群配置 终极版
+#server:
+#  port: 8761
+#spring:
+#  application:
+#    name: eureka-server #应用名称 不用使用特殊字符
+#eureka:
+#  server:
+#    eviction-interval-timer-in-ms: 10000 # 如服务器间隔多少毫秒做定时删除的操作
+#    renewal-percent-threshold: 0.85 # 续约百分比 超过80%的应用没有和你续约，那么eureka会保护服务 不会剔除任何一个服务
+#  client:
+#    service-url:
+#      defaultZone:  http://peer1:8761/eureka,http://peer2:8762/eureka,http://peer3:8763/eureka
+#  instance:
+#    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port} #主机名称 : 应用名称 : 服务端口
+#    hostname: peer1 #主机名称
+#    prefer-ip-address: true   #以IP的形式显示具体的服务信息
+#    lease-renewal-interval-in-seconds: 5  # 服务实例的续约的时间间隔
